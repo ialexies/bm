@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:bmart/app/routes/app_pages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 // import 'package:salon_d_art/app/modules/myProfile/controllers/my_profile_controller.dart';
@@ -24,7 +25,7 @@ class AuthService extends GetxService {
       await Future.delayed(Duration(milliseconds: streamInterval.value));
       try {
         await currentUserChangeListener();
-        log('listening to userchange');
+        // log('listening to userchange');
       } catch (e) {
         log('AuthServe: userStream() - $e');
       }
@@ -39,7 +40,7 @@ class AuthService extends GetxService {
     await FirebaseAuth.instance.signOut();
   }
 
-  getToken() {
+  Future<String> getToken() {
     return FirebaseAuth.instance.currentUser!
         .getIdToken()
         .then((value) => (token.value = value));
@@ -52,7 +53,9 @@ class AuthService extends GetxService {
       if (user == null) {
         isLoggedin.value = false;
         token.value = '';
+
         // TODO(ialexies): uncoment this when routes of signin is already available.
+        Get.toNamed(Routes.SIGNIN);
         // if (Get.currentRoute != Routes.signin) {
         //   signOut();
         //   Get.offAllNamed(Routes.signin);
@@ -75,7 +78,7 @@ class AuthService extends GetxService {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      final userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
