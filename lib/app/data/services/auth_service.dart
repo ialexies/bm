@@ -63,7 +63,7 @@ class AuthService extends GetxService {
       } else {
         isLoggedin.value = true;
         userId.value = user.uid;
-        log('user change dected from auth service');
+        // log('user change dected from auth service');
         // myProfileController.getProfile();
       }
     });

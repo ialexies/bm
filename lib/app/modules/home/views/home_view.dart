@@ -6,18 +6,36 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeView extends GetView<HomeController> {
+  const HomeView({super.key});
+
+  TabBar get _tabBar => const TabBar(
+        indicatorColor: Colors.amber,
+        tabs: [
+          Tab(icon: Icon(Icons.call)),
+          Tab(icon: Icon(Icons.message)),
+        ],
+      );
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
         appBar: AppBar(
-          title: const Text('HomeView'),
-          centerTitle: true,
-        ),
-        body: const Center(
-          child: Text(
-            'HomeView is working',
-            style: TextStyle(fontSize: 20),
+          title: const Text('AppBar'),
+          bottom: PreferredSize(
+            preferredSize: _tabBar.preferredSize,
+            child: ColoredBox(
+              color: Colors.black12,
+              child: _tabBar,
+            ),
           ),
+        ),
+        body: const TabBarView(
+          children: [
+            Icon(Icons.directions_transit),
+            Icon(Icons.directions_bike),
+          ],
         ),
         drawer: Drawer(
           child: ListView(
@@ -71,6 +89,8 @@ class HomeView extends GetView<HomeController> {
               )
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
