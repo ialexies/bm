@@ -25,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -47,30 +44,39 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDqQAInRZtWBNrRWua5qn2IX5lZ-lGWyQU',
-    appId: '1:962604690676:web:d9d1ea1e9d0f80959682a1',
-    messagingSenderId: '962604690676',
-    projectId: 'bmart',
-    authDomain: 'bmart.firebaseapp.com',
-    storageBucket: 'bmart.appspot.com',
+    apiKey: 'AIzaSyBY-ezVaIQoV-lya3iQD7-f1A3s2uVYyD0',
+    appId: '1:818542515734:web:a759f8073344af71388737',
+    messagingSenderId: '818542515734',
+    projectId: 'bmart-28fe5',
+    authDomain: 'bmart-28fe5.firebaseapp.com',
+    storageBucket: 'bmart-28fe5.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDnJ1cM03XtZZzo-ujfQG2RWNmMuW4z-VA',
-    appId: '1:962604690676:android:247bac6c868305d79682a1',
-    messagingSenderId: '962604690676',
-    projectId: 'bmart',
-    storageBucket: 'bmart.appspot.com',
+    apiKey: 'AIzaSyCxxzXjUrhx2Zd9A5egunRVpci-WGruFjc',
+    appId: '1:818542515734:android:2830a85bb5ad1690388737',
+    messagingSenderId: '818542515734',
+    projectId: 'bmart-28fe5',
+    storageBucket: 'bmart-28fe5.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDaXB4i21wJgwyBnxi5W03pDgDKnZbX7Os',
-    appId: '1:962604690676:ios:9a76f41c9574c1079682a1',
-    messagingSenderId: '962604690676',
-    projectId: 'bmart',
-    storageBucket: 'bmart.appspot.com',
-    iosClientId:
-        '962604690676-cvq9sltjjsfbdqcsun6v9i8i4oqrpds9.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBP3CZVexvTMFQxR6-jXG0doHGZwmFzKM4',
+    appId: '1:818542515734:ios:67ca28d871fef615388737',
+    messagingSenderId: '818542515734',
+    projectId: 'bmart-28fe5',
+    storageBucket: 'bmart-28fe5.appspot.com',
+    iosClientId: '818542515734-8kdc3ice4r1t6aev3r9qimrklionm56c.apps.googleusercontent.com',
     iosBundleId: 'com.example.verygoodcore.bmart',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBP3CZVexvTMFQxR6-jXG0doHGZwmFzKM4',
+    appId: '1:818542515734:ios:397e7140fe701b82388737',
+    messagingSenderId: '818542515734',
+    projectId: 'bmart-28fe5',
+    storageBucket: 'bmart-28fe5.appspot.com',
+    iosClientId: '818542515734-ndvusbupptg85tplivc3biibt8b2g2j0.apps.googleusercontent.com',
+    iosBundleId: 'com.example.bmart',
   );
 }

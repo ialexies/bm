@@ -1,77 +1,34 @@
 {
   "project_info": {
-    "project_number": "962604690676",
-    "project_id": "bmart",
-    "storage_bucket": "bmart.appspot.com"
+    "project_number": "818542515734",
+    "project_id": "bmart-28fe5",
+    "storage_bucket": "bmart-28fe5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:962604690676:android:c10194af844c9c209682a1",
-        "android_client_info": {
-          "package_name": "com.example.bmart"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "962604690676-eubq1qrcgrmqvdt3gf3e1r8aqo635db8.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDnJ1cM03XtZZzo-ujfQG2RWNmMuW4z-VA"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "962604690676-eubq1qrcgrmqvdt3gf3e1r8aqo635db8.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "962604690676-5q91ji2c0r9krqc624dmohl2fucg5g33.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.bmart"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:962604690676:android:247bac6c868305d79682a1",
+        "mobilesdk_app_id": "1:818542515734:android:2830a85bb5ad1690388737",
         "android_client_info": {
           "package_name": "com.example.verygoodcore.bmart"
         }
       },
       "oauth_client": [
         {
-          "client_id": "962604690676-eubq1qrcgrmqvdt3gf3e1r8aqo635db8.apps.googleusercontent.com",
+          "client_id": "818542515734-91me8e9m88kb43tvgvohnq1fa8j0bgu1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDnJ1cM03XtZZzo-ujfQG2RWNmMuW4z-VA"
+          "current_key": "AIzaSyCxxzXjUrhx2Zd9A5egunRVpci-WGruFjc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "962604690676-eubq1qrcgrmqvdt3gf3e1r8aqo635db8.apps.googleusercontent.com",
+              "client_id": "818542515734-91me8e9m88kb43tvgvohnq1fa8j0bgu1.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "962604690676-5q91ji2c0r9krqc624dmohl2fucg5g33.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.bmart"
-              }
             }
           ]
         }

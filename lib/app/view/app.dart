@@ -6,7 +6,7 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:bmart/app/routes/app_pages.dart';
-import 'package:bmart/l10n/l10n.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,8 +24,8 @@ class App extends StatelessWidget {
           accentColor: const Color(0xFF13B9FF),
         ),
       ),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+      // localizationsDelegates: AppLocalizations.localizationsDelegates,
+      // supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
