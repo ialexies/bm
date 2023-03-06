@@ -6,6 +6,7 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const SIGNIN = _Paths.SIGNIN;
   static const profile = _Paths.profile;
+  static const BMART_SIDEBAR = _Paths.BMART_SIDEBAR;
 }
 
 abstract class _Paths {
@@ -13,4 +14,5 @@ abstract class _Paths {
   static const HOME = '/home';
   static const SIGNIN = '/signin';
   static const profile = '/profile';
+  static const BMART_SIDEBAR = '/bmart-sidebar';
 }

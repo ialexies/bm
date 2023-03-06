@@ -1,3 +1,4 @@
+import 'package:bmart/app/modules/bmartSidebar/views/bmart_sidebar_view.dart';
 import 'package:bmart/app/modules/home/controllers/home_controller.dart';
 import 'package:bmart/app/routes/app_pages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,7 +42,7 @@ class HomeView extends GetView<HomeController> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              const BmartSideBar(),
+              const BmartSidebarView(),
               const SizedBox(
                 height: 10,
               ),
@@ -78,30 +79,30 @@ class HomeView extends GetView<HomeController> {
   }
 }
 
-class BmartSideBar extends StatelessWidget {
-  const BmartSideBar({
-    super.key,
-  });
+// class BmartSideBar extends StatelessWidget {
+//   const BmartSideBar({
+//     super.key,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return const DrawerHeader(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.red, Colors.deepOrangeAccent],
-          stops: [0.0, 0.7],
-          transform: GradientRotation(90),
-        ),
-      ),
-      child: Text(
-        'SETTINGS',
-        style: TextStyle(
-          fontSize: 22,
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 2,
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const DrawerHeader(
+//       decoration: BoxDecoration(
+//         gradient: LinearGradient(
+//           colors: [Colors.red, Colors.deepOrangeAccent],
+//           stops: [0.0, 0.7],
+//           transform: GradientRotation(90),
+//         ),
+//       ),
+//       child: Text(
+//         'SETTINGS',
+//         style: TextStyle(
+//           fontSize: 22,
+//           color: Colors.white,
+//           fontWeight: FontWeight.bold,
+//           letterSpacing: 2,
+//         ),
+//       ),
+//     );
+//   }
+// }

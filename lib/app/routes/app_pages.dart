@@ -1,10 +1,14 @@
-import 'package:bmart/app/modules/home/bindings/home_binding.dart';
-import 'package:bmart/app/modules/home/views/home_view.dart';
+import 'package:flutter/material.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:get/get.dart';
+
+import '../modules/bmartSidebar/bindings/bmart_sidebar_binding.dart';
+import '../modules/bmartSidebar/views/bmart_sidebar_view.dart';
+import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/home_view.dart';
 
 part 'app_routes.dart';
 
@@ -70,6 +74,11 @@ class AppPages {
           ],
         );
       },
+    ),
+    GetPage(
+      name: _Paths.BMART_SIDEBAR,
+      page: () => const BmartSidebarView(),
+      binding: BmartSidebarBinding(),
     ),
   ];
 }
