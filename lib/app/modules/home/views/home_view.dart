@@ -1,6 +1,7 @@
+import 'package:badges/badges.dart' as badges;
+import 'package:bmart/app/data/services/providers/storage_provider.dart';
 import 'package:bmart/app/modules/bmartSidebar/views/bmart_sidebar_view.dart';
 import 'package:bmart/app/modules/home/controllers/home_controller.dart';
-import 'package:bmart/app/modules/widgetsGlobal/bmartTabBar.dart';
 import 'package:bmart/app/routes/app_pages.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,10 +15,10 @@ class HomeView extends GetView<HomeController> {
         indicatorColor: Colors.amber,
         tabs: [
           Tab(
-            child: TabBarEach('TAB A ', 5),
+            child: _TabBarEach('TAB A ', 5),
           ),
           Tab(
-            child: TabBarEach('TAB B ', 5),
+            child: _TabBarEach('TAB B ', 5),
           ),
         ],
       );
@@ -29,6 +30,12 @@ class HomeView extends GetView<HomeController> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('AppBar'),
+          actions: [
+            IconButton(
+              onPressed: () => FirebaseAuth.instance.signOut(),
+              icon: const Icon(Icons.exit_to_app),
+            )
+          ],
           bottom: PreferredSize(
             preferredSize: _tabBar.preferredSize,
             child: ColoredBox(
@@ -78,6 +85,36 @@ class HomeView extends GetView<HomeController> {
               ListTile(
                 title: ElevatedButton(
                   onPressed: () {
+                    StorageProvider.to.save('test', 'test data val');
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.deepOrange),
+                  ),
+                  child: const Text('Load Initial Data'),
+                ),
+                onTap: controller.closeDrawer,
+              ),
+              ListTile(
+                title: ElevatedButton(
+                  onPressed: () async {
+                    String test = await StorageProvider.to.read(
+                      'test',
+                    ) as String;
+
+                    Get.snackbar('Test Read', test.toString());
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.deepOrange),
+                  ),
+                  child: const Text('Read Data'),
+                ),
+                onTap: controller.closeDrawer,
+              ),
+              ListTile(
+                title: ElevatedButton(
+                  onPressed: () {
                     Get.toNamed(Routes.profile);
                   },
                   style: ButtonStyle(
@@ -105,6 +142,38 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _TabBarEach extends StatelessWidget {
+  const _TabBarEach(this._title, this._count);
+
+  final String _title;
+  final int _count;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(_title),
+        badges.Badge(
+          badgeStyle: const badges.BadgeStyle(
+            badgeColor: Colors.black,
+          ),
+          badgeContent: Text(
+            _count.toString(),
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          child: const Icon(
+            Icons.image,
+            color: Colors.white,
+          ),
+        )
+      ],
     );
   }
 }

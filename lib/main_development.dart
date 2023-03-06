@@ -6,14 +6,14 @@
 // https://opensource.org/licenses/MIT.
 
 import 'dart:developer';
-
 import 'package:bmart/app/app.dart';
 import 'package:bmart/app/data/services/auth_service.dart';
-import 'package:bmart/bootstrap.dart';
 import 'package:bmart/firebase_options.dart';
+import 'package:bmart/initialize_providers.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,13 +23,20 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  await initializeProviders();
   await initServices();
   runApp(const App());
   // await bootstrap(() => const App());
 }
 
 Future<void> initServices() async {
-  log('starting servicess....');
+  log('starting Servicess....');
+
+  log('starting auth service....');
   await Get.putAsync<AuthService>(() async => AuthService());
+
+  log('starting storage service...');
+  await GetStorage.init();
+
   log('All Services started');
 }
