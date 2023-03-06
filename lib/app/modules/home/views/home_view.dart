@@ -59,16 +59,27 @@ class HomeView extends GetView<HomeController> {
                       items: e.productImages.map((i) {
                         return Builder(
                           builder: (BuildContext context) {
-                            return Container(
-                              width: MediaQuery.of(context).size.width,
-                              margin: const EdgeInsets.symmetric(horizontal: 5),
-                              decoration:
-                                  const BoxDecoration(color: Colors.amber),
-                              child: Text(
-                                i.title,
-                                style: const TextStyle(fontSize: 16),
+                            return SizedBox(
+                              width: double
+                                  .infinity, // Set width to double.infinity for full-width images
+                              child: Image(
+                                image: AssetImage(
+                                  'assets/images/${i.img}',
+                                ),
+                                fit: BoxFit.cover,
                               ),
                             );
+
+                            // return Container(
+                            //   width: MediaQuery.of(context).size.width,
+                            //   margin: const EdgeInsets.symmetric(horizontal: 5),
+                            //   decoration:
+                            //       const BoxDecoration(color: Colors.amber),
+                            //   child: Text(
+                            //     i.title,
+                            //     style: const TextStyle(fontSize: 16),
+                            //   ),
+                            // );
                           },
                         );
                       }).toList(),
