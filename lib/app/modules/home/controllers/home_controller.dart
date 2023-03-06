@@ -36,7 +36,9 @@ class HomeController extends GetxController {
       }
     }
     products.value = myprod;
+  }
 
+  Future<void> readCarouselData() async {
     /// Get contents carousel
     final data2 = await StorageProvider.to.read(
       'carousel',
@@ -44,22 +46,24 @@ class HomeController extends GetxController {
 
     if (data2 == null) {
       carousel.value = [];
-      debugPrint('empty products');
+      debugPrint('empty carousel');
       return;
     }
 
+    debugPrint(data2.toString());
+
     var myCarousel = <ProductImage>[];
 
-    if (data.runtimeType == List<ProductImage>) {
-      myCarousel = data as List<ProductImage>;
+    if (data2.runtimeType == List<ProductImage>) {
+      myCarousel = data2 as List<ProductImage>;
     } else {
-      final decodedData = json.decode(data2.toString()) as List<dynamic>;
+      final decodedData2 = json.decode(data2.toString()) as List<dynamic>;
 
-      for (final element in decodedData) {
+      for (final element in decodedData2) {
         myCarousel.add(ProductImage.fromMap(element as Map<String, dynamic>));
       }
     }
-    products.value = myprod;
+
     carousel.value = myCarousel;
   }
 
@@ -67,7 +71,11 @@ class HomeController extends GetxController {
     await StorageProvider.to.remove(
       'products',
     );
+    await StorageProvider.to.remove(
+      'carousel',
+    );
     await readProductData();
+    await readCarouselData();
     debugPrint('Dummy Data removed');
   }
 
@@ -75,6 +83,7 @@ class HomeController extends GetxController {
   void onInit() async {
     super.onInit();
     await readProductData();
+    await readCarouselData();
   }
 
   @override
@@ -175,7 +184,7 @@ class HomeController extends GetxController {
           }),
         ],
       );
-      await readProductData();
+      await readCarouselData();
       debugPrint('successfully added dummy products');
     } catch (e) {
       debugPrint('failed to initialize products ');
