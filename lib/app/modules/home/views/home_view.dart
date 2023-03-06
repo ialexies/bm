@@ -53,69 +53,56 @@ class HomeView extends GetView<HomeController> {
                     child: CarouselSlider(
                       options: CarouselOptions(
                         height: 200,
+                        viewportFraction: 1.0,
                         autoPlay: true,
                         autoPlayInterval: const Duration(seconds: 5),
                       ),
                       items: e.productImages.map((i) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return SizedBox(
-                              width: double
-                                  .infinity, // Set width to double.infinity for full-width images
+                        return Stack(
+                          children: [
+                            SizedBox(
+                              width: double.infinity,
                               child: Image(
                                 image: AssetImage(
                                   'assets/images/${i.img}',
                                 ),
                                 fit: BoxFit.cover,
                               ),
-                            );
-
-                            // return Container(
-                            //   width: MediaQuery.of(context).size.width,
-                            //   margin: const EdgeInsets.symmetric(horizontal: 5),
-                            //   decoration:
-                            //       const BoxDecoration(color: Colors.amber),
-                            //   child: Text(
-                            //     i.title,
-                            //     style: const TextStyle(fontSize: 16),
-                            //   ),
-                            // );
-                          },
+                            ),
+                            Positioned(
+                              right: 15,
+                              top: 15,
+                              child: Stack(
+                                children: [
+                                  Icon(
+                                    Icons.star,
+                                    size: 50,
+                                    color: i.isFeatured
+                                        ? Colors.amber
+                                        : Colors.transparent,
+                                    shadows: i.isFeatured
+                                        ? const <Shadow>[
+                                            Shadow(
+                                              blurRadius: 15,
+                                            )
+                                          ]
+                                        : null,
+                                  ),
+                                  const Icon(
+                                    Icons.star_border,
+                                    size: 50,
+                                    color: Colors.white,
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
                         );
                       }).toList(),
                     ),
                   ),
                 )
                 .toList(),
-
-            // children: [
-            // Align(
-            //   alignment: Alignment.topCenter,
-            //   child: CarouselSlider(
-            //     options: CarouselOptions(
-            //       height: 200,
-            //       autoPlay: true,
-            //       autoPlayInterval: const Duration(seconds: 5),
-            //     ),
-            //     items: [1, 2, 3, 4, 5].map((i) {
-            //       return Builder(
-            //         builder: (BuildContext context) {
-            //           return Container(
-            //             width: MediaQuery.of(context).size.width,
-            //             margin: const EdgeInsets.symmetric(horizontal: 5),
-            //             decoration: const BoxDecoration(color: Colors.amber),
-            //             child: Text(
-            //               'text $i',
-            //               style: const TextStyle(fontSize: 16),
-            //             ),
-            //           );
-            //         },
-            //       );
-            //     }).toList(),
-            //   ),
-            // ),
-            //   const Icon(Icons.directions_bike),
-            // ],
           ),
           drawer: Drawer(
             child: ListView(
