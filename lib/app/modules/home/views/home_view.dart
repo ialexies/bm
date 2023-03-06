@@ -58,45 +58,67 @@ class HomeView extends GetView<HomeController> {
                         autoPlayInterval: const Duration(seconds: 5),
                       ),
                       items: e.productImages.map((i) {
-                        return Stack(
-                          children: [
-                            SizedBox(
-                              width: double.infinity,
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/images/${i.img}',
+                        return GestureDetector(
+                          onLongPress: () => Get.defaultDialog(
+                              title: 'Image Options',
+                              content: Container(
+                                child: Column(
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {},
+                                      child: const Text('Move to other tab'),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {},
+                                      child: const Text('Add To Carousel'),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {},
+                                      child: const Text('Remove from Carousel'),
+                                    ),
+                                  ],
                                 ),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Positioned(
-                              right: 15,
-                              top: 15,
-                              child: Stack(
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    size: 50,
-                                    color: i.isFeatured
-                                        ? Colors.amber
-                                        : Colors.transparent,
-                                    shadows: i.isFeatured
-                                        ? const <Shadow>[
-                                            Shadow(
-                                              blurRadius: 15,
-                                            )
-                                          ]
-                                        : null,
+                              )),
+                          child: Stack(
+                            children: [
+                              SizedBox(
+                                width: double.infinity,
+                                child: Image(
+                                  image: AssetImage(
+                                    'assets/images/${i.img}',
                                   ),
-                                  const Icon(
-                                    Icons.star_border,
-                                    size: 50,
-                                    color: Colors.white,
-                                  ),
-                                ],
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            )
-                          ],
+                              Positioned(
+                                right: 15,
+                                top: 15,
+                                child: Stack(
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      size: 50,
+                                      color: i.isFeatured
+                                          ? Colors.amber
+                                          : Colors.transparent,
+                                      shadows: i.isFeatured
+                                          ? const <Shadow>[
+                                              Shadow(
+                                                blurRadius: 15,
+                                              )
+                                            ]
+                                          : null,
+                                    ),
+                                    const Icon(
+                                      Icons.star_border,
+                                      size: 50,
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         );
                       }).toList(),
                     ),

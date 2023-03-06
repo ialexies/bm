@@ -100,8 +100,9 @@ class HomeController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    await readProductData();
   }
 
   @override
