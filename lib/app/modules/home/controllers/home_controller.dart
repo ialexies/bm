@@ -17,7 +17,17 @@ class HomeController extends GetxController {
         'products',
         [
           Product.fromMap({
-            'title': 'Product 1xx',
+            'title': 'Tab A',
+            'productImages': [
+              ProductImage.fromMap({
+                'isFeatured': true,
+                'title': 'prod1-img2',
+                'img': 'mypath',
+              }),
+            ],
+          }),
+          Product.fromMap({
+            'title': 'Tab B',
             'productImages': [
               ProductImage.fromMap({
                 'isFeatured': true,
