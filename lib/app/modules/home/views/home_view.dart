@@ -41,24 +41,7 @@ class HomeView extends GetView<HomeController> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.red, Colors.deepOrangeAccent],
-                    stops: [0.0, 0.7],
-                    transform: GradientRotation(90),
-                  ),
-                ),
-                child: Text(
-                  'SETTINGS',
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 2,
-                  ),
-                ),
-              ),
+              const BmartSideBar(),
               const SizedBox(
                 height: 10,
               ),
@@ -89,6 +72,34 @@ class HomeView extends GetView<HomeController> {
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class BmartSideBar extends StatelessWidget {
+  const BmartSideBar({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const DrawerHeader(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.red, Colors.deepOrangeAccent],
+          stops: [0.0, 0.7],
+          transform: GradientRotation(90),
+        ),
+      ),
+      child: Text(
+        'SETTINGS',
+        style: TextStyle(
+          fontSize: 22,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 2,
         ),
       ),
     );

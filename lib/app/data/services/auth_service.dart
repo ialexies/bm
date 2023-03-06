@@ -7,16 +7,17 @@ import 'package:get/get.dart';
 
 class AuthService extends GetxService {
   final isLoggedin = RxBool(false);
-  var streamAuthController = StreamController<User>().obs;
+  Rx<StreamController<User>> streamAuthController =
+      StreamController<User>().obs;
   final userId = RxString('');
-  var isStreamOn = true.obs;
+  RxBool isStreamOn = true.obs;
   final token = ''.obs;
   // final myProfileController = Get.put(MyProfileController());
-  var streamInterval = 1.obs;
+  RxInt streamInterval = 1.obs;
 
   @override
-  void onInit() async {
-    streamAuthController.value.addStream(userStream());
+  Future<void> onInit() async {
+    await streamAuthController.value.addStream(userStream());
     super.onInit();
   }
 
@@ -25,7 +26,6 @@ class AuthService extends GetxService {
       await Future.delayed(Duration(milliseconds: streamInterval.value));
       try {
         await currentUserChangeListener();
-        // log('listening to userchange');
       } catch (e) {
         log('AuthServe: userStream() - $e');
       }
@@ -56,15 +56,9 @@ class AuthService extends GetxService {
 
         // TODO(ialexies): uncoment this when routes of signin is already available.
         Get.toNamed(Routes.SIGNIN);
-        // if (Get.currentRoute != Routes.signin) {
-        //   signOut();
-        //   Get.offAllNamed(Routes.signin);
-        // }
       } else {
         isLoggedin.value = true;
         userId.value = user.uid;
-        // log('user change dected from auth service');
-        // myProfileController.getProfile();
       }
     });
   }
