@@ -8,6 +8,7 @@ environment:
   flutter: 3.3.7
 
 dependencies:
+  badges: ^3.0.2
   bloc: ^8.1.0
   carousel_slider: ^4.2.1
   cloud_firestore: ^4.4.3
