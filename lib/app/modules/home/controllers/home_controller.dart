@@ -7,28 +7,32 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   RxList<Product> products = <Product>[].obs;
 
   Future<void> initializeProductData() async {
-    await StorageProvider.to.save(
-      'products',
-      [
-        Product.fromMap({
-          'title': 'Product 1',
-          'productImages': [
-            ProductImage.fromMap({
-              'isFeatured': true,
-              'title': 'prod1-img2',
-              'img': 'mypath',
-            }),
-          ],
-        }),
-      ],
-    );
+    try {
+      await StorageProvider.to.save(
+        'products',
+        [
+          Product.fromMap({
+            'title': 'Product 1xx',
+            'productImages': [
+              ProductImage.fromMap({
+                'isFeatured': true,
+                'title': 'prod1-img2',
+                'img': 'mypath',
+              }),
+            ],
+          }),
+        ],
+      );
+      await readProductData();
+      debugPrint('successfully added dummy products');
+    } catch (e) {
+      debugPrint('failed to initialize products ');
+    }
   }
 
   Future<void> readProductData() async {
@@ -36,15 +40,33 @@ class HomeController extends GetxController {
       'products',
     );
 
-    final myprod = <Product>[];
-
-    final decodedData = json.decode(data.toString()) as List<dynamic>;
-
-    for (final element in decodedData) {
-      myprod.add(Product.fromMap2(element as Map<String, dynamic>));
+    if (data == null) {
+      products.value = [];
+      debugPrint('empty products');
+      return;
     }
 
-    print(myprod);
+    var myprod = <Product>[];
+
+    if (data.runtimeType == List<Product>) {
+      myprod = data as List<Product>;
+    } else {
+      final decodedData = json.decode(data.toString()) as List<dynamic>;
+
+      for (final element in decodedData) {
+        myprod.add(Product.fromMap2(element as Map<String, dynamic>));
+      }
+    }
+
+    products.value = myprod;
+  }
+
+  Future<void> removeProductData() async {
+    await StorageProvider.to.remove(
+      'products',
+    );
+    await readProductData();
+    debugPrint('Dummy Data removed');
   }
 
   @override

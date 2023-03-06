@@ -19,7 +19,7 @@ class StorageProvider extends GetxService {
     await box.write(key, val);
   }
 
-  Future removeCart(String key) async {
+  Future remove(String key) async {
     await box.remove(key);
   }
 }

@@ -111,6 +111,19 @@ class HomeView extends GetView<HomeController> {
               ),
               ListTile(
                 title: ElevatedButton(
+                  onPressed: () async {
+                    await controller.removeProductData();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.deepOrange),
+                  ),
+                  child: const Text('Remove Data'),
+                ),
+                onTap: controller.closeDrawer,
+              ),
+              ListTile(
+                title: ElevatedButton(
                   onPressed: () {
                     Get.toNamed(Routes.profile);
                   },
@@ -134,6 +147,19 @@ class HomeView extends GetView<HomeController> {
                   child: const Text('Logout'),
                 ),
                 onTap: controller.closeDrawer,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Obx(
+                () => Center(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Product Items: '),
+                    Text(controller.products.length.toString()),
+                  ],
+                )),
               )
             ],
           ),
