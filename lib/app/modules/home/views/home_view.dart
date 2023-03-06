@@ -1,11 +1,10 @@
 import 'package:bmart/app/modules/bmartSidebar/views/bmart_sidebar_view.dart';
 import 'package:bmart/app/modules/home/controllers/home_controller.dart';
+import 'package:bmart/app/modules/widgetsGlobal/bmartTabBar.dart';
 import 'package:bmart/app/routes/app_pages.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:badges/badges.dart' as badges;
-
 import 'package:get/get.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -15,10 +14,10 @@ class HomeView extends GetView<HomeController> {
         indicatorColor: Colors.amber,
         tabs: [
           Tab(
-            child: _TabBarEach('TAB A ', 5),
+            child: TabBarEach('TAB A ', 5),
           ),
           Tab(
-            child: _TabBarEach('TAB B ', 5),
+            child: TabBarEach('TAB B ', 5),
           ),
         ],
       );
@@ -109,63 +108,3 @@ class HomeView extends GetView<HomeController> {
     );
   }
 }
-
-class _TabBarEach extends StatelessWidget {
-  const _TabBarEach(this._title, this._count);
-
-  final String _title;
-  final int _count;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(_title),
-        badges.Badge(
-          badgeStyle: const badges.BadgeStyle(
-            badgeColor: Colors.black,
-          ),
-          badgeContent: Text(
-            _count.toString(),
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          child: const Icon(
-            Icons.image,
-            color: Colors.white,
-          ),
-        )
-      ],
-    );
-  }
-}
-
-// class BmartSideBar extends StatelessWidget {
-//   const BmartSideBar({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const DrawerHeader(
-//       decoration: BoxDecoration(
-//         gradient: LinearGradient(
-//           colors: [Colors.red, Colors.deepOrangeAccent],
-//           stops: [0.0, 0.7],
-//           transform: GradientRotation(90),
-//         ),
-//       ),
-//       child: Text(
-//         'SETTINGS',
-//         style: TextStyle(
-//           fontSize: 22,
-//           color: Colors.white,
-//           fontWeight: FontWeight.bold,
-//           letterSpacing: 2,
-//         ),
-//       ),
-//     );
-//   }
-// }
