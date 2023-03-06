@@ -21,7 +21,7 @@ class HomeController extends GetxController {
             'productImages': [
               ProductImage.fromMap({
                 'isFeatured': true,
-                'title': 'prod1-img2',
+                'title': 'prod1-img21',
                 'img': 'p1-img1.jpg',
               }),
               ProductImage.fromMap({
@@ -31,18 +31,28 @@ class HomeController extends GetxController {
               }),
               ProductImage.fromMap({
                 'isFeatured': true,
-                'title': 'prod1-img2',
+                'title': 'prod1-img3',
                 'img': 'p1-img3.jpg',
               }),
               ProductImage.fromMap({
                 'isFeatured': false,
-                'title': 'prod1-img2',
+                'title': 'prod1-img4',
                 'img': 'p1-img4.jpg',
               }),
               ProductImage.fromMap({
                 'isFeatured': true,
-                'title': 'prod1-img2',
+                'title': 'prod1-img5',
                 'img': 'p1-img5.jpg',
+              }),
+              ProductImage.fromMap({
+                'isFeatured': true,
+                'title': 'prod6-img26',
+                'img': 'p1-img6.jpg',
+              }),
+              ProductImage.fromMap({
+                'isFeatured': true,
+                'title': 'prod7-img7',
+                'img': 'p1-img7.jpg',
               }),
             ],
           }),

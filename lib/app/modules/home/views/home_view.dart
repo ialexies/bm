@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_declarations, omit_local_variable_types
 
 import 'package:badges/badges.dart' as badges;
+import 'package:bmart/app/data/services/models/product.dart';
 import 'package:bmart/app/modules/bmartSidebar/views/bmart_sidebar_view.dart';
 import 'package:bmart/app/modules/home/controllers/home_controller.dart';
 import 'package:bmart/app/routes/app_pages.dart';
@@ -15,209 +16,251 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final TabBar tabBar = TabBar(
-        indicatorColor: Colors.amber,
-        tabs: controller.products
-            .map(
-              (element) => Tab(
-                child: _TabBarEach(element.title, element.productImages.length),
-              ),
-            )
-            .toList(),
-      );
+      // final TabBar tabBar = TabBar(
+      //   indicatorColor: Colors.amber,
+      //   tabs: controller.products
+      //       .map(
+      //         (element) => Tab(
+      //           child: _TabBarEach(element.title, element.productImages.length),
+      //         ),
+      //       )
+      //       .toList(),
+      // );
 
-      return DefaultTabController(
-        length: controller.products.length,
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('AppBar'),
-            actions: [
-              IconButton(
-                onPressed: () => FirebaseAuth.instance.signOut(),
-                icon: const Icon(Icons.exit_to_app),
-              )
-            ],
-            bottom: PreferredSize(
-              preferredSize: tabBar.preferredSize,
-              child: ColoredBox(
-                color: Colors.black12,
-                child: tabBar,
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('AppBar'),
+          actions: [
+            IconButton(
+              onPressed: () => FirebaseAuth.instance.signOut(),
+              icon: const Icon(Icons.exit_to_app),
+            )
+          ],
+        ),
+        body: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  height: Get.width * .8,
+                  viewportFraction: 1,
+                  autoPlay: true,
+                  autoPlayInterval: const Duration(seconds: 5),
+                ),
+                items: [1, 2, 3, 4, 5].map((i) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return const SizedBox(
+                        width: double.infinity,
+                        child: Image(
+                          image: AssetImage(
+                            'assets/images/p1-img1.jpg',
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
               ),
             ),
-          ),
-          body: TabBarView(
-            children: controller.products
-                .map(
-                  (e) => Align(
-                    alignment: Alignment.topCenter,
-                    child: CarouselSlider(
-                      options: CarouselOptions(
-                        height: 200,
-                        viewportFraction: 1.0,
-                        autoPlay: true,
-                        autoPlayInterval: const Duration(seconds: 5),
-                      ),
-                      items: e.productImages.map((i) {
-                        return GestureDetector(
-                          onLongPress: () => Get.defaultDialog(
-                              title: 'Image Options',
-                              content: Container(
-                                child: Column(
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      child: const Text('Move to other tab'),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      child: const Text('Add To Carousel'),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      child: const Text('Remove from Carousel'),
-                                    ),
-                                  ],
-                                ),
-                              )),
-                          child: Stack(
-                            children: [
-                              SizedBox(
-                                width: double.infinity,
-                                child: Image(
-                                  image: AssetImage(
-                                    'assets/images/${i.img}',
+            SliverToBoxAdapter(
+              child: DefaultTabController(
+                length: controller.products.length,
+                child: ColoredBox(
+                  color: Colors.white,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ColoredBox(
+                        color: Colors.black87,
+                        child: TabBar(
+                          indicatorColor: Colors.amber,
+                          tabs: controller.products
+                              .map(
+                                (element) => Tab(
+                                  child: _TabBarEach(
+                                    element.title,
+                                    element.productImages.length,
                                   ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Positioned(
-                                right: 15,
-                                top: 15,
-                                child: Stack(
-                                  children: [
-                                    Icon(
-                                      Icons.star,
-                                      size: 50,
-                                      color: i.isFeatured
-                                          ? Colors.amber
-                                          : Colors.transparent,
-                                      shadows: i.isFeatured
-                                          ? const <Shadow>[
-                                              Shadow(
-                                                blurRadius: 15,
-                                              )
-                                            ]
-                                          : null,
-                                    ),
-                                    const Icon(
-                                      Icons.star_border,
-                                      size: 50,
-                                      color: Colors.white,
-                                    ),
-                                  ],
                                 ),
                               )
-                            ],
+                              .toList(),
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: Get.height * .6,
+                            child: TabBarView(
+                              children: controller.products
+                                  .map(
+                                    _tabBody.new,
+                                  )
+                                  .toList(),
+                            ),
                           ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
-          drawer: Drawer(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-                const BmartSidebarView(),
-                const SizedBox(
-                  height: 10,
-                ),
-                ListTile(
-                  title: ElevatedButton(
-                    onPressed: () {
-                      controller.initializeProductData();
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.deepOrange),
-                    ),
-                    child: const Text('Load Initial Data'),
-                  ),
-                  onTap: controller.closeDrawer,
-                ),
-                ListTile(
-                  title: ElevatedButton(
-                    onPressed: () async {
-                      await controller.readProductData();
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.deepOrange),
-                    ),
-                    child: const Text('Read Data'),
-                  ),
-                  onTap: controller.closeDrawer,
-                ),
-                ListTile(
-                  title: ElevatedButton(
-                    onPressed: () async {
-                      await controller.removeProductData();
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.deepOrange),
-                    ),
-                    child: const Text('Remove Data'),
-                  ),
-                  onTap: controller.closeDrawer,
-                ),
-                ListTile(
-                  title: ElevatedButton(
-                    onPressed: () {
-                      Get.toNamed(Routes.profile);
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.deepOrange),
-                    ),
-                    child: const Text('My Profile'),
-                  ),
-                  onTap: controller.closeDrawer,
-                ),
-                ListTile(
-                  title: ElevatedButton(
-                    onPressed: () async {
-                      // Get.toNamed(Routes.profile);
-                      await FirebaseAuth.instance.signOut();
-                    },
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.deepOrange)),
-                    child: const Text('Logout'),
-                  ),
-                  onTap: controller.closeDrawer,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Obx(
-                  () => Center(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('Product Items: '),
-                      Text(controller.products.length.toString()),
+                        ],
+                      ),
                     ],
-                  )),
-                )
-              ],
+                  ),
+                ),
+              ),
             ),
+          ],
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              const BmartSidebarView(),
+              const SizedBox(
+                height: 10,
+              ),
+              ListTile(
+                title: ElevatedButton(
+                  onPressed: () {
+                    controller.initializeProductData();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.deepOrange),
+                  ),
+                  child: const Text('Load Initial Data'),
+                ),
+                onTap: controller.closeDrawer,
+              ),
+              ListTile(
+                title: ElevatedButton(
+                  onPressed: () async {
+                    await controller.readProductData();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.deepOrange),
+                  ),
+                  child: const Text('Read Data'),
+                ),
+                onTap: controller.closeDrawer,
+              ),
+              ListTile(
+                title: ElevatedButton(
+                  onPressed: () async {
+                    await controller.removeProductData();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.deepOrange),
+                  ),
+                  child: const Text('Remove Data'),
+                ),
+                onTap: controller.closeDrawer,
+              ),
+              ListTile(
+                title: ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(Routes.profile);
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.deepOrange),
+                  ),
+                  child: const Text('My Profile'),
+                ),
+                onTap: controller.closeDrawer,
+              ),
+              ListTile(
+                title: ElevatedButton(
+                  onPressed: () async {
+                    // Get.toNamed(Routes.profile);
+                    await FirebaseAuth.instance.signOut();
+                  },
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.deepOrange)),
+                  child: const Text('Logout'),
+                ),
+                onTap: controller.closeDrawer,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Obx(
+                () => Center(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Product Items: '),
+                    Text(controller.products.length.toString()),
+                  ],
+                )),
+              )
+            ],
           ),
         ),
       );
     });
+  }
+}
+
+class _tabBody extends StatelessWidget {
+  _tabBody(
+    this.e,
+  );
+
+  Product e;
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 2,
+      physics: ScrollPhysics(),
+      children: e.productImages
+          .map(
+            (e) => GestureDetector(
+              onTap: () => Get.defaultDialog(
+                title: e.title,
+                content: Image(
+                  image: AssetImage(
+                    'assets/images/${e.img}',
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              onLongPress: () => Get.defaultDialog(
+                title: 'Image Options',
+                content: Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'Move to other tab',
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'Add To Carousel',
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'Remove from Carousel',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              child: Image(
+                image: AssetImage(
+                  'assets/images/${e.img}',
+                ),
+                fit: BoxFit.cover,
+              ),
+            ),
+          )
+          .toList(),
+    );
   }
 }
 
