@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart' as badges;
+import 'package:bmart/app/data/services/models/product.dart';
 import 'package:bmart/app/data/services/providers/storage_provider.dart';
 import 'package:bmart/app/modules/bmartSidebar/views/bmart_sidebar_view.dart';
 import 'package:bmart/app/modules/home/controllers/home_controller.dart';
@@ -85,7 +86,7 @@ class HomeView extends GetView<HomeController> {
               ListTile(
                 title: ElevatedButton(
                   onPressed: () {
-                    StorageProvider.to.save('test', 'test data val');
+                    controller.initializeProductData();
                   },
                   style: ButtonStyle(
                     backgroundColor:
@@ -98,11 +99,7 @@ class HomeView extends GetView<HomeController> {
               ListTile(
                 title: ElevatedButton(
                   onPressed: () async {
-                    String test = await StorageProvider.to.read(
-                      'test',
-                    ) as String;
-
-                    Get.snackbar('Test Read', test.toString());
+                    await controller.readProductData();
                   },
                   style: ButtonStyle(
                     backgroundColor:
