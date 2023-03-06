@@ -47,14 +47,14 @@ class HomeView extends GetView<HomeController> {
                   autoPlay: true,
                   autoPlayInterval: const Duration(seconds: 5),
                 ),
-                items: [1, 2, 3, 4, 5].map((i) {
+                items: controller.carousel.map((i) {
                   return Builder(
                     builder: (BuildContext context) {
-                      return const SizedBox(
+                      return SizedBox(
                         width: double.infinity,
                         child: Image(
                           image: AssetImage(
-                            'assets/images/p1-img1.jpg',
+                            'assets/images/${i.img}',
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -281,12 +281,12 @@ class _TabBarEach extends StatelessWidget {
         ),
         badges.Badge(
           badgeStyle: const badges.BadgeStyle(
-            badgeColor: Colors.black,
+            badgeColor: Colors.amber,
           ),
           badgeContent: Text(
             _count.toString(),
             style: const TextStyle(
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
           child: const Icon(
