@@ -4,7 +4,9 @@ import 'package:badges/badges.dart' as badges;
 import 'package:bmart/app/data/services/models/product.dart';
 import 'package:bmart/app/modules/bmartSidebar/views/bmart_sidebar_view.dart';
 import 'package:bmart/app/modules/home/controllers/home_controller.dart';
-import 'package:bmart/app/modules/home/views/tab_body.dart';
+import 'package:bmart/app/modules/home/widgets/tab_body.dart';
+import 'package:bmart/app/modules/home/widgets/bmart_drawer.dart';
+import 'package:bmart/app/modules/widgetsGlobal/bmartTabBar.dart';
 import 'package:bmart/app/routes/app_pages.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,17 +19,6 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      // final TabBar tabBar = TabBar(
-      //   indicatorColor: Colors.amber,
-      //   tabs: controller.products
-      //       .map(
-      //         (element) => Tab(
-      //           child: _TabBarEach(element.title, element.productImages.length),
-      //         ),
-      //       )
-      //       .toList(),
-      // );
-
       return Scaffold(
         appBar: AppBar(
           title: const Text('AppBar'),
@@ -41,7 +32,8 @@ class HomeView extends GetView<HomeController> {
         body: controller.products.value.isEmpty
             ? const Center(
                 child: Text(
-                  'Please Click the load initial Data button at the sidebar',
+                  'Please Click the \n "LOAD INITIAL BUTTON" \nin the sidebar',
+                  textAlign: TextAlign.center,
                 ),
               )
             : CustomScrollView(
@@ -88,7 +80,7 @@ class HomeView extends GetView<HomeController> {
                                 tabs: controller.products
                                     .map(
                                       (element) => Tab(
-                                        child: _TabBarEach(
+                                        child: TabBarEach(
                                           element.title,
                                           element.productImages.length,
                                         ),
@@ -118,148 +110,8 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ],
               ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              const BmartSidebarView(),
-              const SizedBox(
-                height: 10,
-              ),
-              ListTile(
-                title: ElevatedButton(
-                  onPressed: () {
-                    Get.toNamed(Routes.profile);
-                  },
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.deepOrange),
-                  ),
-                  child: const Text('My Profile'),
-                ),
-                onTap: controller.closeDrawer,
-              ),
-              ListTile(
-                title: ElevatedButton(
-                  onPressed: () async {
-                    // Get.toNamed(Routes.profile);
-                    await FirebaseAuth.instance.signOut();
-                  },
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.deepOrange)),
-                  child: const Text('Logout'),
-                ),
-                onTap: controller.closeDrawer,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15),
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade100,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(top: 15, bottom: 10),
-                      child: const Text('Data Management'),
-                    ),
-                    ListTile(
-                      title: ElevatedButton(
-                        onPressed: () {
-                          controller.initializeProductData();
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.deepOrange),
-                        ),
-                        child: const Text('Load Initial Data'),
-                      ),
-                      onTap: controller.closeDrawer,
-                    ),
-                    ListTile(
-                      title: ElevatedButton(
-                        onPressed: () async {
-                          await controller.readProductData();
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.deepOrange),
-                        ),
-                        child: const Text('Read Data'),
-                      ),
-                      onTap: controller.closeDrawer,
-                    ),
-                    ListTile(
-                      title: ElevatedButton(
-                        onPressed: () async {
-                          await controller.removeProductData();
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.deepOrange),
-                        ),
-                        child: const Text('Remove Data'),
-                      ),
-                      onTap: controller.closeDrawer,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Product Items: '),
-                    Text(controller.products.length.toString()),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
+        drawer: const BmartDrawer(),
       );
     });
-  }
-}
-
-class _TabBarEach extends StatelessWidget {
-  const _TabBarEach(this._title, this._count);
-
-  final String _title;
-  final int _count;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(_title),
-        const SizedBox(
-          width: 5,
-        ),
-        badges.Badge(
-          badgeStyle: const badges.BadgeStyle(
-            badgeColor: Colors.amber,
-          ),
-          badgeContent: Text(
-            _count.toString(),
-            style: const TextStyle(
-              color: Colors.black,
-            ),
-          ),
-          child: const Icon(
-            Icons.image,
-            color: Colors.white,
-          ),
-        )
-      ],
-    );
   }
 }
