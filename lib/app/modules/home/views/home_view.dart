@@ -1,13 +1,9 @@
 // ignore_for_file: prefer_const_declarations, omit_local_variable_types
 
-import 'package:badges/badges.dart' as badges;
-import 'package:bmart/app/data/services/models/product.dart';
-import 'package:bmart/app/modules/bmartSidebar/views/bmart_sidebar_view.dart';
 import 'package:bmart/app/modules/home/controllers/home_controller.dart';
-import 'package:bmart/app/modules/home/widgets/tab_body.dart';
 import 'package:bmart/app/modules/home/widgets/bmart_drawer.dart';
+import 'package:bmart/app/modules/home/widgets/tab_body.dart';
 import 'package:bmart/app/modules/widgetsGlobal/bmartTabBar.dart';
-import 'package:bmart/app/routes/app_pages.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +25,7 @@ class HomeView extends GetView<HomeController> {
             )
           ],
         ),
-        body: controller.products.value.isEmpty
+        body: controller.products.isEmpty
             ? const Center(
                 child: Text(
                   'Please Click the \n "LOAD INITIAL BUTTON" \nin the sidebar',

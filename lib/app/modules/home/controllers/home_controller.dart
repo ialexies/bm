@@ -197,15 +197,12 @@ class HomeController extends GetxController {
     final toProductIndex = prodIndex == 0 ? 1 : 0;
 
     // remove img from its current tab
-
     products[prodIndex].productImages.remove(productImg);
 
-    // update();
+    // Add the image to other tab
+    products[toProductIndex].productImages.add(productImg);
+
+    // refresh state
     products.refresh();
-    // products.value.   .remove(product);
-
-    // add product image to the other tab
-
-    // read storage and refresh
   }
 }
