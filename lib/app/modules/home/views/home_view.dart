@@ -4,6 +4,7 @@ import 'package:badges/badges.dart' as badges;
 import 'package:bmart/app/data/services/models/product.dart';
 import 'package:bmart/app/modules/bmartSidebar/views/bmart_sidebar_view.dart';
 import 'package:bmart/app/modules/home/controllers/home_controller.dart';
+import 'package:bmart/app/modules/home/views/tab_body.dart';
 import 'package:bmart/app/routes/app_pages.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -96,7 +97,7 @@ class HomeView extends GetView<HomeController> {
                             child: TabBarView(
                               children: controller.products
                                   .map(
-                                    _tabBody.new,
+                                    TabBody.new,
                                   )
                                   .toList(),
                             ),
@@ -186,82 +187,20 @@ class HomeView extends GetView<HomeController> {
               const SizedBox(
                 height: 30,
               ),
-              Obx(
-                () => Center(
-                    child: Row(
+              Center(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text('Product Items: '),
                     Text(controller.products.length.toString()),
                   ],
-                )),
+                ),
               )
             ],
           ),
         ),
       );
     });
-  }
-}
-
-class _tabBody extends StatelessWidget {
-  _tabBody(
-    this.e,
-  );
-
-  Product e;
-  @override
-  Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      physics: ScrollPhysics(),
-      children: e.productImages
-          .map(
-            (e) => GestureDetector(
-              onTap: () => Get.defaultDialog(
-                title: e.title,
-                content: Image(
-                  image: AssetImage(
-                    'assets/images/${e.img}',
-                  ),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              onLongPress: () => Get.defaultDialog(
-                title: 'Image Options',
-                content: Column(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Move to other tab',
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Add To Carousel',
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Remove from Carousel',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              child: Image(
-                image: AssetImage(
-                  'assets/images/${e.img}',
-                ),
-                fit: BoxFit.cover,
-              ),
-            ),
-          )
-          .toList(),
-    );
   }
 }
 

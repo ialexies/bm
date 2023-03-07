@@ -190,4 +190,22 @@ class HomeController extends GetxController {
       debugPrint('failed to initialize products ');
     }
   }
+
+  void moveToOtherTab(Product product, ProductImage productImg) {
+    final prodIndex = products.indexOf(product);
+
+    final toProductIndex = prodIndex == 0 ? 1 : 0;
+
+    // remove img from its current tab
+
+    products[prodIndex].productImages.remove(productImg);
+
+    // update();
+    products.refresh();
+    // products.value.   .remove(product);
+
+    // add product image to the other tab
+
+    // read storage and refresh
+  }
 }
