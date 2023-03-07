@@ -100,6 +100,32 @@ class HomeController extends GetxController {
 
   Future<void> initializeProductData() async {
     /// Initialize data for each tab
+    await _loadTabData();
+
+    /// Initialize data for carousel
+    await _loadCarouselData();
+  }
+
+  Future<void> _loadCarouselData() async {
+    try {
+      await StorageProvider.to.save(
+        'carousel',
+        [
+          ProductImage.fromMap({
+            'isFeatured': true,
+            'title': 'prod1-img21',
+            'img': 'p1-img1.jpg',
+          }),
+        ],
+      );
+      await readCarouselData();
+      debugPrint('successfully added dummy products');
+    } catch (e) {
+      debugPrint('failed to initialize products ');
+    }
+  }
+
+  Future<void> _loadTabData() async {
     try {
       await StorageProvider.to.save(
         'products',
@@ -161,34 +187,26 @@ class HomeController extends GetxController {
     } catch (e) {
       debugPrint('failed to initialize products ');
     }
+  }
 
-    /// Initialize data for carousel
-    try {
-      await StorageProvider.to.save(
-        'carousel',
-        [
-          ProductImage.fromMap({
-            'isFeatured': true,
-            'title': 'prod1-img21',
-            'img': 'p1-img1.jpg',
-          }),
-          ProductImage.fromMap({
-            'isFeatured': false,
-            'title': 'prod1-img2',
-            'img': 'p1-img2.jpg',
-          }),
-          ProductImage.fromMap({
-            'isFeatured': true,
-            'title': 'prod1-img3',
-            'img': 'p1-img3.jpg',
-          }),
-        ],
-      );
-      await readCarouselData();
-      debugPrint('successfully added dummy products');
-    } catch (e) {
-      debugPrint('failed to initialize products ');
-    }
+  bool isImginCurrentTabInTabA(Product product, ProductImage productImg) {
+    final prodIndex = products.indexOf(product);
+    // final toProductIndex = prodIndex == 0 ? 1 : 0;
+    if (prodIndex == 0) return true;
+    return false;
+  }
+
+  void moveToOtherTabToggle(Product product, ProductImage productImg) {
+    final prodIndex = isImginCurrentTabInTabA(product, productImg) ? 0 : 1;
+    final toProductIndex = prodIndex == 0 ? 1 : 0;
+    // remove img from its current tab
+    products[prodIndex].productImages.remove(productImg);
+
+    // Add the image to other tab
+    products[toProductIndex].productImages.add(productImg);
+
+    // refresh state
+    products.refresh();
   }
 
   void moveToOtherTab(Product product, ProductImage productImg) {
@@ -204,5 +222,41 @@ class HomeController extends GetxController {
 
     // refresh state
     products.refresh();
+  }
+
+  bool isImgInCarousel(ProductImage productImg) {
+    final isImgExistInCarosel =
+        carousel.firstWhereOrNull((element) => element.img == productImg.img);
+
+    if (isImgExistInCarosel != null) return true;
+
+    return false;
+  }
+
+  void addOrRemoveInCarousel(Product e, ProductImage productImg, bool val) {
+    if (val) {
+      debugPrint(val.toString());
+      //Check if Img is already in the carousel
+      final isImgExistInCarosel = isImgInCarousel(productImg);
+      if (isImgExistInCarosel == true) return;
+
+      // Add the image to other tab
+      carousel.add(productImg);
+      Get.defaultDialog(
+        title: 'Success',
+        content: const Text('Successfully added to carousel'),
+      ).then((value) => Get.back());
+    } else {
+      final isImgExistInCarosel = isImgInCarousel(productImg);
+
+      if (isImgExistInCarosel != true) return;
+
+      carousel.remove(productImg);
+
+      Get.defaultDialog(
+        title: 'Success',
+        content: const Text('Image Removed'),
+      ).then((value) => Get.back());
+    }
   }
 }

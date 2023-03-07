@@ -25,11 +25,35 @@ class TabBody extends GetView<HomeController> {
                 (productImg) => GestureDetector(
                   onTap: () => Get.defaultDialog(
                     title: e.title,
-                    content: Image(
-                      image: AssetImage(
-                        'assets/images/${productImg.img}',
-                      ),
-                      fit: BoxFit.cover,
+                    content: Column(
+                      children: [
+                        Image(
+                          image: AssetImage(
+                            'assets/images/${productImg.img}',
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                        Switch(
+                          value: !controller.isImginCurrentTabInTabA(
+                            e,
+                            productImg,
+                          ),
+                          onChanged: (val) {
+                            controller.moveToOtherTabToggle(e, productImg);
+                            Get.back();
+                          },
+                        ),
+                        Checkbox(
+                          value: controller.isImgInCarousel(productImg),
+                          onChanged: (val) {
+                            controller.addOrRemoveInCarousel(
+                              e,
+                              productImg,
+                              val ?? false,
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ),
                   onLongPress: () => Get.defaultDialog(
@@ -38,9 +62,6 @@ class TabBody extends GetView<HomeController> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            // final homeController = Get.find<HomeController>();
-                            // final productIndex =
-                            // homeController.products.value.indexOf(e);
                             controller.moveToOtherTab(
                               e,
                               productImg,
@@ -51,17 +72,15 @@ class TabBody extends GetView<HomeController> {
                             'Move to other tab',
                           ),
                         ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Add To Carousel',
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Remove from Carousel',
-                          ),
+                        Checkbox(
+                          value: controller.isImgInCarousel(productImg),
+                          onChanged: (val) {
+                            controller.addOrRemoveInCarousel(
+                              e,
+                              productImg,
+                              val ?? false,
+                            );
+                          },
                         ),
                       ],
                     ),
