@@ -1,3 +1,5 @@
+// ignore_for_file: inference_failure_on_function_invocation
+
 import 'package:bmart/app/data/services/models/product.dart';
 import 'package:bmart/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +45,7 @@ class TabBody extends GetView<HomeController> {
                               e,
                               productImg,
                             );
+                            Get.back();
                           },
                           child: const Text(
                             'Move to other tab',

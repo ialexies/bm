@@ -38,79 +38,86 @@ class HomeView extends GetView<HomeController> {
             )
           ],
         ),
-        body: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  height: Get.width * .8,
-                  viewportFraction: 1,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 5),
+        body: controller.products.value.isEmpty
+            ? const Center(
+                child: Text(
+                  'Please Click the load initial Data button at the sidebar',
                 ),
-                items: controller.carousel.map((i) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return SizedBox(
-                        width: double.infinity,
-                        child: Image(
-                          image: AssetImage(
-                            'assets/images/${i.img}',
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      );
-                    },
-                  );
-                }).toList(),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: DefaultTabController(
-                length: controller.products.length,
-                child: ColoredBox(
-                  color: Colors.white,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        color: Colors.blue.shade800,
-                        padding: const EdgeInsets.only(top: 20, bottom: .5),
-                        child: TabBar(
-                          indicatorColor: Colors.amber,
-                          tabs: controller.products
-                              .map(
-                                (element) => Tab(
-                                  child: _TabBarEach(
-                                    element.title,
-                                    element.productImages.length,
+              )
+            : CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                        height: Get.width * .8,
+                        viewportFraction: 1,
+                        autoPlay: true,
+                        autoPlayInterval: const Duration(seconds: 5),
+                      ),
+                      items: controller.carousel.map((i) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return SizedBox(
+                              width: double.infinity,
+                              child: Image(
+                                image: AssetImage(
+                                  'assets/images/${i.img}',
+                                ),
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: DefaultTabController(
+                      length: controller.products.length,
+                      child: ColoredBox(
+                        color: Colors.white,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              color: Colors.blue.shade800,
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: .5),
+                              child: TabBar(
+                                indicatorColor: Colors.amber,
+                                tabs: controller.products
+                                    .map(
+                                      (element) => Tab(
+                                        child: _TabBarEach(
+                                          element.title,
+                                          element.productImages.length,
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ),
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: Get.height * .5,
+                                  child: TabBarView(
+                                    children: controller.products
+                                        .map(
+                                          TabBody.new,
+                                        )
+                                        .toList(),
                                   ),
                                 ),
-                              )
-                              .toList(),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: Get.height * .5,
-                            child: TabBarView(
-                              children: controller.products
-                                  .map(
-                                    TabBody.new,
-                                  )
-                                  .toList(),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ),
-          ],
-        ),
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
@@ -118,45 +125,6 @@ class HomeView extends GetView<HomeController> {
               const BmartSidebarView(),
               const SizedBox(
                 height: 10,
-              ),
-              ListTile(
-                title: ElevatedButton(
-                  onPressed: () {
-                    controller.initializeProductData();
-                  },
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.deepOrange),
-                  ),
-                  child: const Text('Load Initial Data'),
-                ),
-                onTap: controller.closeDrawer,
-              ),
-              ListTile(
-                title: ElevatedButton(
-                  onPressed: () async {
-                    await controller.readProductData();
-                  },
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.deepOrange),
-                  ),
-                  child: const Text('Read Data'),
-                ),
-                onTap: controller.closeDrawer,
-              ),
-              ListTile(
-                title: ElevatedButton(
-                  onPressed: () async {
-                    await controller.removeProductData();
-                  },
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.deepOrange),
-                  ),
-                  child: const Text('Remove Data'),
-                ),
-                onTap: controller.closeDrawer,
               ),
               ListTile(
                 title: ElevatedButton(
@@ -183,6 +151,63 @@ class HomeView extends GetView<HomeController> {
                   child: const Text('Logout'),
                 ),
                 onTap: controller.closeDrawer,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 15),
+                decoration: BoxDecoration(
+                  color: Colors.blue.shade100,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 10),
+                      child: const Text('Data Management'),
+                    ),
+                    ListTile(
+                      title: ElevatedButton(
+                        onPressed: () {
+                          controller.initializeProductData();
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.deepOrange),
+                        ),
+                        child: const Text('Load Initial Data'),
+                      ),
+                      onTap: controller.closeDrawer,
+                    ),
+                    ListTile(
+                      title: ElevatedButton(
+                        onPressed: () async {
+                          await controller.readProductData();
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.deepOrange),
+                        ),
+                        child: const Text('Read Data'),
+                      ),
+                      onTap: controller.closeDrawer,
+                    ),
+                    ListTile(
+                      title: ElevatedButton(
+                        onPressed: () async {
+                          await controller.removeProductData();
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.deepOrange),
+                        ),
+                        child: const Text('Remove Data'),
+                      ),
+                      onTap: controller.closeDrawer,
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 30,
