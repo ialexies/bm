@@ -72,8 +72,9 @@ class HomeView extends GetView<HomeController> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      ColoredBox(
-                        color: Colors.black87,
+                      Container(
+                        color: Colors.blue.shade800,
+                        padding: const EdgeInsets.only(top: 20, bottom: .5),
                         child: TabBar(
                           indicatorColor: Colors.amber,
                           tabs: controller.products
@@ -91,7 +92,7 @@ class HomeView extends GetView<HomeController> {
                       Column(
                         children: [
                           SizedBox(
-                            height: Get.height * .6,
+                            height: Get.height * .5,
                             child: TabBarView(
                               children: controller.products
                                   .map(
